@@ -1,0 +1,1 @@
+from database.objects import Robot
