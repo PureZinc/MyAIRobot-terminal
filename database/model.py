@@ -23,13 +23,13 @@ class Model:
 
         with open(datafile, "w") as f:
             json.dump(data, f, indent=4)
-    
+
     def create(self, obj):
         obj_id = random.randint(1, 256*256)
         self.objects[obj_id] = obj
         self._save_data()
         return obj_id
-    
+
     def get(self, obj_id):
         return self.objects.get(obj_id, None)
 
@@ -46,10 +46,16 @@ class Model:
             self._save_data()
             return True
         return False
-    
-    def query(self, **data):
+
+    def query(self, by_keys=False, **data):
         results = []
-        for obj in self.objects.values():
+        for obj_id, obj in self.objects.items():
             if all(obj.get(key) == value for key, value in data.items()):
-                results.append(obj)
+                results.append(obj_id) if by_keys else results.append(obj)
         return results
+
+    def get_id(self, object):
+        quer = self.query(by_keys=True, **object)
+        if len(quer) != 1:
+            return {}
+        return quer[0]

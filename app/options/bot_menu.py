@@ -1,8 +1,10 @@
-from services.ai import ask_chat
+from services.ai import ask_chat, robot_convo
 from app.utils import choice_interface, coming_soon
 from database.current import set_current_data, unload_current_data, get_current_data
 from services.robot_xp import RobotXP
+from database.objects import Robot
 import time
+import random
 
 
 def ask_bot():
@@ -57,13 +59,50 @@ def train_bot():
         }
     )
 
+def chat_between_robots():
+    current_robot = get_current_data("bot")
+    robots = Robot().query()
+    all_robots = [bot for bot in robots if bot != current_robot]
+    robot2 = random.choice(all_robots)
+
+    current_id, robot2_id = Robot().get_id(current_robot), Robot().get_id(robot2)
+
+    print("Finding bot to talk to...")
+    time.sleep(2)
+    print(f"{current_robot['name']} is currently speaking to {robot2['name']}")
+    conversation, summary, memories = robot_convo(current_robot, robot2, rounds=random.randrange(2, 6))
+    print("\n", conversation, "\n")
+    print(summary, "\n")
+    
+
+    curr_memory, rob2_memory = memories[current_robot['name']], memories[robot2['name']]
+
+    current_robot['memory'].append(curr_memory)
+    robot2['memory'].append(rob2_memory)
+
+    Robot().update(current_id, current_robot)
+    set_current_data("bot", current_robot)
+    Robot().update(robot2_id, robot2)
+    
+
+
+def playground():
+    while True:
+        choice = choice_interface(
+            "The Playground!", {
+                "chat with other bots": chat_between_robots,
+                "play games": coming_soon
+            }
+        )
+        if choice == "exited":
+            break
 
 def adventure_into_cyberspace():
     print("\n Entering Cyberspace \n")
     time.sleep(2)
     choice = choice_interface(
         "Welcome to Cyberspace! Where would you like to explore?", {
-            "playground": coming_soon,
+            "playground": playground,
             "gym": coming_soon,
             "library": coming_soon,
         }

@@ -18,7 +18,9 @@
                 "focused",
                 "detail-oriented"
             ],
-            "memory": [],
+            "memory": [
+                "Graphella is dedicated and intelligent, focusing on analyzing data patterns to predict future trends."
+            ],
             "xp": 0
         },
         "248": {
@@ -32,7 +34,9 @@
                 "dedicated",
                 "intelligent"
             ],
-            "memory": [],
+            "memory": [
+                "TestBot is direct and detail-oriented, ensuring accuracy by cross-referencing information from multiple sources."
+            ],
             "xp": 0
         }
     }

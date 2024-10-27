@@ -1,5 +1,6 @@
 import json
-from .files import currentfile
+from .files import currentfile, datafile
+from .objects import Robot
 
 def unload_current_data():
     with open(currentfile, "r") as f:

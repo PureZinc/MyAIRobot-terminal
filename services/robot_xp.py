@@ -24,7 +24,3 @@ class RobotXP:
     
     def __str__(self):
         return f"Level: {self.level}, XP: {self.xp}, Progress: {self.level_bar}"
-    
-
-test = RobotXP(500)
-print(test)
