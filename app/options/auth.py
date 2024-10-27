@@ -1,6 +1,6 @@
 import inquirer
 from database.objects import User
-from database.current import unload_current_data, save_current_data
+from database.current import set_current_data
 
 
 def auth():
@@ -23,8 +23,6 @@ def auth():
         user = User().login_user(ask_username, ask_password)
 
     if user:
-        current = unload_current_data()
-        current["user"] = user
-        save_current_data(current)
+        set_current_data("user", user)
         return True
     return False

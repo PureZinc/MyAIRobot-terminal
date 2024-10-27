@@ -1,6 +1,6 @@
 import inquirer
 from database.objects import Robot
-from database.current import unload_current_data, save_current_data
+from database.current import unload_current_data, save_current_data, set_current_data
 from services.ai import generate_behaviors
 from ..utils import choice_interface
 
@@ -41,9 +41,15 @@ def choose_bot():
 
 
 def bots():
-    choice_interface(
+    choice = choice_interface(
         "Manage your bots", {
             "create new robot": create_bot,
             "choose robot": choose_bot,
         }
     )
+    if choice == "exited":
+        print("Would you also like to log out?")
+        yes_no = input("0: YES | 1: NO  ")
+        if yes_no == "0":
+            set_current_data("user", None)
+        return True

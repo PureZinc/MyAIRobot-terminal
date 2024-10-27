@@ -1,5 +1,6 @@
 from services.ai import ask_chat
 from app.utils import choice_interface, coming_soon
+from database.current import set_current_data
 
 
 def ask_bot():
@@ -14,7 +15,7 @@ def ask_bot():
 
 
 def bot_menu():
-    choice_interface(
+    choice = choice_interface(
         "Hello! What do we plan on doing today?", {
             "chat": ask_bot,
             "train": coming_soon,
@@ -22,3 +23,5 @@ def bot_menu():
             "settings": coming_soon
         }
     )
+    if choice == "exited":
+        set_current_data("bot", None)

@@ -10,3 +10,7 @@ def save_current_data(current):
     with open(currentfile, "w") as f:
         json.dump(current, f, indent=4)
 
+def set_current_data(key, value):
+    current = unload_current_data()
+    current[key] = value
+    save_current_data(current)

@@ -8,12 +8,15 @@ def run():
 
     if not current["user"]:
         auth()
-
-    if current["user"] and not current["bot"]:
-        bots()
         current = unload_current_data()
-
-    if current["user"] and current["bot"]:
-        bot_menu()
+    
+    while current["user"]:
+        if not current["bot"]:
+            bot = bots()
+            if bot:
+                break
+        else:
+            bot_menu()
+        current = unload_current_data()
 
     save_current_data(current)
