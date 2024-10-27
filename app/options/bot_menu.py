@@ -1,17 +1,44 @@
 from services.ai import ask_chat
 from app.utils import choice_interface, coming_soon
-from database.current import set_current_data
+from database.current import set_current_data, unload_current_data, get_current_data
 
 
 def ask_bot():
-    ask_me_anything = f"Hello! Ask me anything"
+    current = unload_current_data()
+
+    bot = current['bot']
+    username = current['user']['username']
+
+    ask_me_anything = f"Hello, {username}! I'm {bot['name']}! Ask me anything"
     while True:
-        prompt = input(f"(press 0 to break) {ask_me_anything}: ")
+        prompt = input(f"\n \n (Press 0 to break) {ask_me_anything}: ")
         if prompt == "0":
             break
-        answer = ask_chat(prompt)
-        print(answer)
+
+        behaviors = ' '.join(bot['behavior'])
+        answer = ask_chat(prompt, params=[f"Robot name: {bot['name']}", f"Imitate these behaviors: {behaviors}"])
+        print("\n \n", answer)
         ask_me_anything = "Ask me something else"
+
+
+def bot_settings():
+    bot = get_current_data("bot")
+    print(
+        "\n \n", 
+        f"Bot Name: {bot['name']}", "\n", 
+        f"Behavior: {bot['behavior']}", "\n", 
+        f"XP: {bot['xp']}", "\n"
+    )
+
+    while True:
+        choice = choice_interface(
+            "Settings", {
+                "rename": coming_soon,
+                "delete": coming_soon
+            }
+        )
+        if choice == "exited":
+            break
 
 
 def bot_menu():
@@ -20,7 +47,7 @@ def bot_menu():
             "chat": ask_bot,
             "train": coming_soon,
             "adventure": coming_soon,
-            "settings": coming_soon
+            "settings": bot_settings
         }
     )
     if choice == "exited":

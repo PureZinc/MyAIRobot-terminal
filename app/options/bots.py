@@ -34,8 +34,9 @@ def choose_bot():
                 choices=choose_robots,
             ),
         ]
-        chosen_robot = inquirer.prompt(choice_bot)
-        current["bot"] = chosen_robot
+        chosen_robot = inquirer.prompt(choice_bot)['option']
+        get_robot = Robot().query(owner_id=current["user"], name=chosen_robot)[0]
+        current["bot"] = get_robot
         save_current_data(current)
         return True
 

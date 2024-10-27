@@ -14,3 +14,7 @@ def set_current_data(key, value):
     current = unload_current_data()
     current[key] = value
     save_current_data(current)
+
+def get_current_data(key):
+    current = unload_current_data()
+    return current[key]

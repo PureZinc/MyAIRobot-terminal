@@ -20,6 +20,20 @@
             ],
             "memory": [],
             "xp": 0
+        },
+        "248": {
+            "name": "Graphella",
+            "owner_id": {
+                "username": "nicholas",
+                "password": "e2284dc3b5535645288cde2bad818404be728fb8c9f70b055c0b52023b0ff0a0"
+            },
+            "behavior": [
+                "Charming",
+                "dedicated",
+                "intelligent"
+            ],
+            "memory": [],
+            "xp": 0
         }
     }
 }
