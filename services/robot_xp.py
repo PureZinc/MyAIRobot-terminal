@@ -8,6 +8,7 @@ class RobotXP:
         self.level_bar = self._level_bar()
     
     def _get_level(self):
+        if self.xp == 0: return 1
         return int(math.log(self.xp/10, 1.6)) + 1
     
     def _get_xp_for_level(self, level: int):
