@@ -2,6 +2,7 @@ from services.ai import ask_chat
 from app.utils import choice_interface, coming_soon
 from database.current import set_current_data, unload_current_data, get_current_data
 from services.robot_xp import RobotXP
+import time
 
 
 def ask_bot():
@@ -48,15 +49,28 @@ def train_bot():
     level = RobotXP(xp).level
     if level < 3:
         print("This unlocks at level 3! \n")
+        return False
     
     choice = choice_interface(
-        "Hello! What do we plan on doing today?", {
-            "chat": ask_bot,
-            "train": coming_soon,
-            "adventure": coming_soon,
-            "settings": bot_settings
+        "Welcome to training!", {
+            "choices": coming_soon
         }
     )
+
+
+def adventure_into_cyberspace():
+    print("\n Entering Cyberspace \n")
+    time.sleep(2)
+    choice = choice_interface(
+        "Welcome to Cyberspace! Where would you like to explore?", {
+            "playground": coming_soon,
+            "gym": coming_soon,
+            "library": coming_soon,
+        }
+    )
+    if choice == "exited":
+        print("\n Exiting Cyberspace \n")
+        time.sleep(2)
 
 
 def bot_menu():
@@ -64,7 +78,7 @@ def bot_menu():
         "Hello! What do we plan on doing today?", {
             "chat": ask_bot,
             "train": train_bot,
-            "adventure": coming_soon,
+            "enter cyberspace": adventure_into_cyberspace,
             "settings": bot_settings
         }
     )

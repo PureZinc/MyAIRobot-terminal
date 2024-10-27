@@ -8,11 +8,14 @@ from ..utils import choice_interface
 def create_bot():
     behaviors = "inapropriate"
     while behaviors == "inapropriate":
-        name = input("Name your Robot: ")
-        description = input("Write a 100 word description of your robot: ")
+        name = input("(Press 0 to exit) Name your Robot: ")
+        if name == "0": return False
+        description = input("(Press 0 to exit) Write a 100 word description of your robot: ")
+        if description == "0": return False
         while len(description) < 100:
             print(f"Description only contains {len(description)} words")
-            description = input("Write a 100 word description of your robot: ")
+            description = input("(Press 0 to exit) Write a 100 word description of your robot: ")
+            if description == "0": return False
         behaviors = generate_behaviors(description)
     
     current = unload_current_data()
