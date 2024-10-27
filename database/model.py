@@ -25,7 +25,7 @@ class Model:
             json.dump(data, f, indent=4)
     
     def create(self, obj):
-        obj_id = random.randint(1, 255)
+        obj_id = random.randint(1, 256*256)
         self.objects[obj_id] = obj
         self._save_data()
         return obj_id
