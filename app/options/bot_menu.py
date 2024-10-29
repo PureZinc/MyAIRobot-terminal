@@ -36,7 +36,7 @@ def bot_settings():
     while True:
         choice = choice_interface(
             "Settings", {
-                "delete": coming_soon
+                "Delete": coming_soon
             }
         )
         if choice == "exited":
@@ -87,8 +87,8 @@ def playground():
     while True:
         choice = choice_interface(
             "The Playground!", {
-                "chat with other bots": chat_between_robots,
-                "play games": coming_soon
+                "Chat With Other Bots": chat_between_robots,
+                "Play Games": coming_soon
             }
         )
         if choice == "exited":
@@ -99,9 +99,9 @@ def adventure_into_cyberspace():
     time.sleep(2)
     choice = choice_interface(
         "Welcome to Cyberspace! Where would you like to explore?", {
-            "playground": playground,
-            "gym": coming_soon,
-            "library": coming_soon,
+            "Playground": playground,
+            "Gym": coming_soon,
+            "Library": coming_soon,
         }
     )
     if choice == "exited":
@@ -116,10 +116,10 @@ def bot_menu():
     if bot:
         choice_interface(
             f"Hello, {user_name}, I'm {bot_name}! What do we plan on doing today?", {
-                "chat": ask_bot,
-                "train": train_bot,
-                "enter cyberspace": adventure_into_cyberspace,
-                "settings": bot_settings
+                "Chat": ask_bot,
+                "Train": train_bot,
+                "Enter Cyberspace": adventure_into_cyberspace,
+                "Settings": bot_settings
             }
         )
         set_current_data("bot", None)

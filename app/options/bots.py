@@ -48,7 +48,7 @@ def choose_bot():
 def bots():
     choice_interface(
         "Manage your bots", {
-            "create new robot": create_bot,
-            "choose robot": choose_bot,
+            "Create New Robot": create_bot,
+            "Choose Robot": choose_bot,
         }
     )

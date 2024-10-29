@@ -11,7 +11,7 @@ def auth():
             inquirer.List(
                 'auth',
                 message="Create User",
-                choices=["register", "login", "exit"],
+                choices=["Register", "Login", "Exit"],
             ),
         ]
         logging_in = inquirer.prompt(auth)
