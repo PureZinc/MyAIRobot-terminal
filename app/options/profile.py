@@ -13,10 +13,8 @@ def profile():
             "Settings": coming_soon
         }
     )
-    if choice == "exited":
-        if choice == "exited":
-            print("Would you also like to log out?")
-            yes_no = input("0: YES | 1: NO  ")
-            if yes_no == "0":
-                set_current_data("user", None)
-            return True
+    print("Would you also like to log out?")
+    yes_no = input("0: YES | 1: NO  ")
+    if yes_no == "0":
+        print("User successfully logged out!")
+        set_current_data("user", None)

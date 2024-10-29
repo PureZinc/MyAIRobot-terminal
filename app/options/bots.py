@@ -1,8 +1,9 @@
 import inquirer
 from database.objects import Robot
-from database.current import unload_current_data, save_current_data, set_current_data
+from database.current import unload_current_data, save_current_data
 from services.ai import generate_behaviors
 from ..utils import choice_interface
+from .bot_menu import bot_menu
 
 
 def create_bot():
@@ -41,7 +42,7 @@ def choose_bot():
         get_robot = Robot().query(owner_id=current["user"], name=chosen_robot)[0]
         current["bot"] = get_robot
         save_current_data(current)
-        return True
+        bot_menu()
 
 
 def bots():
@@ -51,4 +52,3 @@ def bots():
             "choose robot": choose_bot,
         }
     )
-    return True

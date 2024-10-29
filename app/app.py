@@ -6,15 +6,10 @@ from database.current import get_current_data
 
 def run():
     play = intro()
-    if play:
-        user = get_current_data("user")
-        if not user:
-            auth()
-            user = get_current_data("user")
+    while play:
+        auth()
+        profile()
+        play = intro()
+
         
-        while user:
-            bot = get_current_data("bot")
-            while not bot:
-                profile()
-                bot = get_current_data("bot")
-            bot_menu()
+

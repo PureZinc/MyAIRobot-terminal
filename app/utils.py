@@ -16,9 +16,8 @@ def choice_interface(ask, choice_structure: dict, self_returns=[]):
         make_choice = inquirer.prompt(choose)
         chosen = make_choice['choice']
         if chosen == "Exit":
-            return "exited"
-        elif chosen in self_returns:
-            return chosen
-        func = choice_structure[chosen]()
-        if func:
             break
+        choice_structure[chosen]()
+        if chosen in self_returns:
+            return chosen
+    return "exited"

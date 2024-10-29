@@ -19,8 +19,7 @@ def ask_bot():
         if prompt == "0":
             break
 
-        behaviors = ' '.join(bot['behavior'])
-        answer = ask_chat(prompt, params=[f"Robot name: {bot['name']}", f"Imitate these behaviors: {behaviors}"])
+        answer = ask_chat(bot, prompt)
         print("\n \n", answer)
         ask_me_anything = "Ask me something else"
 
@@ -37,7 +36,6 @@ def bot_settings():
     while True:
         choice = choice_interface(
             "Settings", {
-                "rename": coming_soon,
                 "delete": coming_soon
             }
         )
@@ -64,26 +62,25 @@ def chat_between_robots():
     robots = Robot().query()
     all_robots = [bot for bot in robots if bot != current_robot]
     robot2 = random.choice(all_robots)
-
     current_id, robot2_id = Robot().get_id(current_robot), Robot().get_id(robot2)
 
     print("Finding bot to talk to...")
     time.sleep(2)
     print(f"{current_robot['name']} is currently speaking to {robot2['name']}")
-    conversation, summary, memories = robot_convo(current_robot, robot2, rounds=random.randrange(2, 6))
-    print("\n", conversation, "\n")
-    print(summary, "\n")
-    
+    conversation, summary = robot_convo(current_robot, robot2, rounds=random.randrange(4, 8))
+    for convo in conversation:
+        print(convo)
+        time.sleep(1)
+    print(f"\n Summary: {summary}")
 
-    curr_memory, rob2_memory = memories[current_robot['name']], memories[robot2['name']]
-
-    current_robot['memory'].append(curr_memory)
-    robot2['memory'].append(rob2_memory)
+    if f"Spoke to {robot2['name']}" not in current_robot['memory']:
+        current_robot['memory'].append(f"Spoke to {robot2['name']}")
+    if f"Spoke to {current_robot['name']}" not in robot2['memory']:
+        robot2['memory'].append(f"Spoke to {current_robot['name']}")
 
     Robot().update(current_id, current_robot)
     set_current_data("bot", current_robot)
     Robot().update(robot2_id, robot2)
-    
 
 
 def playground():
@@ -113,13 +110,16 @@ def adventure_into_cyberspace():
 
 
 def bot_menu():
-    choice = choice_interface(
-        "Hello! What do we plan on doing today?", {
-            "chat": ask_bot,
-            "train": train_bot,
-            "enter cyberspace": adventure_into_cyberspace,
-            "settings": bot_settings
-        }
-    )
-    if choice == "exited":
+    user, bot = get_current_data("user"), get_current_data("bot")
+    user_name, bot_name = user['username'], bot['name']
+
+    if bot:
+        choice_interface(
+            f"Hello, {user_name}, I'm {bot_name}! What do we plan on doing today?", {
+                "chat": ask_bot,
+                "train": train_bot,
+                "enter cyberspace": adventure_into_cyberspace,
+                "settings": bot_settings
+            }
+        )
         set_current_data("bot", None)

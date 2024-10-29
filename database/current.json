@@ -3,21 +3,5 @@
         "username": "nicholas",
         "password": "e2284dc3b5535645288cde2bad818404be728fb8c9f70b055c0b52023b0ff0a0"
     },
-    "bot": {
-        "name": "TestBot",
-        "owner_id": {
-            "username": "nicholas",
-            "password": "e2284dc3b5535645288cde2bad818404be728fb8c9f70b055c0b52023b0ff0a0"
-        },
-        "behavior": [
-            "Direct",
-            "informative",
-            "focused",
-            "detail-oriented"
-        ],
-        "memory": [
-            "Graphella is dedicated and intelligent, focusing on analyzing data patterns to predict future trends."
-        ],
-        "xp": 0
-    }
+    "bot": null
 }
