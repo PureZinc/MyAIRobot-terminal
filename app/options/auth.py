@@ -7,7 +7,7 @@ def auth():
     auth = [
         inquirer.List(
             'auth',
-            message="Login to your account!",
+            message="Create User",
             choices=["register", "login", "exit"],
         ),
     ]

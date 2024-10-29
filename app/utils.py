@@ -3,8 +3,8 @@ import inquirer
 
 coming_soon = lambda: print("Choice coming soon!")
 
-def choice_interface(ask, choice_structure: dict):
-    choices = list(choice_structure.keys()) + ["exit"]
+def choice_interface(ask, choice_structure: dict, self_returns=[]):
+    choices = list(choice_structure.keys()) + ["Exit"]
     choose = [
         inquirer.List(
             'choice',
@@ -15,8 +15,10 @@ def choice_interface(ask, choice_structure: dict):
     while True:
         make_choice = inquirer.prompt(choose)
         chosen = make_choice['choice']
-        if chosen == "exit":
+        if chosen == "Exit":
             return "exited"
+        elif chosen in self_returns:
+            return chosen
         func = choice_structure[chosen]()
         if func:
             break

@@ -1,22 +1,20 @@
 from .options.auth import auth
 from .options.bot_menu import bot_menu
-from .options.bots import bots
-from database.current import unload_current_data, save_current_data
+from .options.intro import intro
+from .options.profile import profile
+from database.current import get_current_data
 
 def run():
-    current = unload_current_data()
-
-    if not current["user"]:
-        auth()
-        current = unload_current_data()
-    
-    while current["user"]:
-        if not current["bot"]:
-            bot = bots()
-            if bot:
-                break
-        else:
+    play = intro()
+    if play:
+        user = get_current_data("user")
+        if not user:
+            auth()
+            user = get_current_data("user")
+        
+        while user:
+            bot = get_current_data("bot")
+            while not bot:
+                profile()
+                bot = get_current_data("bot")
             bot_menu()
-        current = unload_current_data()
-
-    save_current_data(current)

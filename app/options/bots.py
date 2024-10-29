@@ -45,15 +45,10 @@ def choose_bot():
 
 
 def bots():
-    choice = choice_interface(
+    choice_interface(
         "Manage your bots", {
             "create new robot": create_bot,
             "choose robot": choose_bot,
         }
     )
-    if choice == "exited":
-        print("Would you also like to log out?")
-        yes_no = input("0: YES | 1: NO  ")
-        if yes_no == "0":
-            set_current_data("user", None)
-        return True
+    return True
