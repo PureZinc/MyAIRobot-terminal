@@ -1,7 +1,7 @@
 from services.ai import ask_chat, robot_convo
 from app.utils import choice_interface, coming_soon
 from database.current import set_current_data, unload_current_data, get_current_data
-from services.robot_xp import RobotXP
+from ..objects import RobotXP
 from database.objects import Robot
 import time
 import random

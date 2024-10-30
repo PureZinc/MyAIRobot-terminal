@@ -1,6 +1,6 @@
 import json
-from .files import currentfile, datafile
-from .objects import Robot
+from config.config import currentfile
+
 
 def unload_current_data():
     with open(currentfile, "r") as f:

@@ -1,12 +1,16 @@
 import json
 import random
-from .files import datafile
+from config.config import datafile
 
 
 class Model:
     def __init__(self, name):
         self.name = name
         self.objects = self._load_data()
+        self.definition = self._obj()
+    
+    def _obj(self, **fields):
+        return fields
     
     def _load_data(self):
         try:
@@ -50,8 +54,9 @@ class Model:
     def query(self, by_keys=False, **data):
         results = []
         for obj_id, obj in self.objects.items():
+            item_to_append = obj_id if by_keys else obj
             if all(obj.get(key) == value for key, value in data.items()):
-                results.append(obj_id) if by_keys else results.append(obj)
+                results.append(item_to_append)
         return results
 
     def get_id(self, object):

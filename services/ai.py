@@ -1,9 +1,7 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-import time
+from config.config import OPENAI_API_KEY
 
-
-OPENAI_API_KEY = "sk-e1dewt6Mxl5VtBJv72tso86OAMfWHC8JeZYPYfHHIUT3BlbkFJ7QoKvjaj9Pc49U9vKPIiLKFC5rnXuBp_vYPBBBXS4A"
 
 model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7, api_key=OPENAI_API_KEY)
 
