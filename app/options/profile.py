@@ -31,18 +31,19 @@ def settings():
         f"What would you like to do?", {
             "View Profile": my_profile,
             "Log Out": lambda: log_out("Are you sure you want to log out?"),
-            "Delete": coming_soon,
+            "Delete User": coming_soon,
         }
     )
 
 
 def profile():
     user = get_current_data("user")
-
-    choice = choice_interface(
+    if not user: return
+    choice_interface(
         f"Welcome Back, {user['username']}!", {
             "Profile": my_profile,
             "My Bots": bots,
+            "Cyberspace": coming_soon,
             "Settings": settings
         }
     )

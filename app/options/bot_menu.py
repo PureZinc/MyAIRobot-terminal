@@ -27,7 +27,7 @@ def ask_bot():
 def bot_settings():
     bot = get_current_data("bot")
     print(
-        "\n \n", 
+        "\n\n", 
         f"Bot Name: {bot['name']}", "\n", 
         f"Behavior: {bot['behavior']}", "\n", 
         RobotXP(bot['xp']), "\n"
@@ -51,7 +51,7 @@ def train_bot():
         print("This unlocks at level 3! \n")
         return False
     
-    choice = choice_interface(
+    choice_interface(
         "Welcome to training!", {
             "choices": coming_soon
         }
@@ -62,7 +62,6 @@ def chat_between_robots():
     robots = Robot().query()
     all_robots = [bot for bot in robots if bot != current_robot]
     robot2 = random.choice(all_robots)
-    current_id, robot2_id = Robot().get_id(current_robot), Robot().get_id(robot2)
 
     print("Finding bot to talk to...")
     time.sleep(2)
@@ -73,14 +72,14 @@ def chat_between_robots():
         time.sleep(1)
     print(f"\n Summary: {summary}")
 
-    if f"Spoke to {robot2['name']}" not in current_robot['memory']:
-        current_robot['memory'].append(f"Spoke to {robot2['name']}")
-    if f"Spoke to {current_robot['name']}" not in robot2['memory']:
-        robot2['memory'].append(f"Spoke to {current_robot['name']}")
+    # if f"Spoke to {robot2['name']}" not in current_robot['memory']:
+    #     current_robot['memory'].append(f"Spoke to {robot2['name']}")
+    # if f"Spoke to {current_robot['name']}" not in robot2['memory']:
+    #     robot2['memory'].append(f"Spoke to {current_robot['name']}")
 
-    Robot().update(current_id, current_robot)
-    set_current_data("bot", current_robot)
-    Robot().update(robot2_id, robot2)
+    # Robot().update(current_id, current_robot)
+    # set_current_data("bot", current_robot)
+    # Robot().update(robot2_id, robot2)
 
 
 def playground():

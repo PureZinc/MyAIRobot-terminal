@@ -6,9 +6,9 @@ from config.config import datafile
 class Model:
     def __init__(self, name: str):
         self.name = name
-        self.objects = self._get_list_data()
         self.data = self._load_data()
-
+        self.objects = self._get_list_data()
+    
     def _get_list_data(self) -> list:
         return [{"id": obj_id, **obj} for obj_id, obj in self.data.items()]
     
@@ -53,10 +53,9 @@ class Model:
 
     def query(self, by_keys=False, **data):
         results = []
-        for obj_id, obj in self.data.items():
-            item_to_append = obj_id if by_keys else obj
-            if all(obj.get(key) == value for key, value in data.items()):
-                results.append(item_to_append)
+        for obj in self.objects:
+            if all(obj[data_key] == data_value for data_key, data_value in data.items()):
+                results.append(obj)
         return results
 
     def get_id(self, object):

@@ -13,7 +13,7 @@
     "robots": {
         "42": {
             "name": "TestBot",
-            "owner_id": 64,
+            "owner_id": "64",
             "behavior": [
                 "Direct",
                 "informative",
@@ -27,7 +27,7 @@
         },
         "248": {
             "name": "Graphella",
-            "owner_id": 64,
+            "owner_id": "64",
             "behavior": [
                 "Charming",
                 "dedicated",
