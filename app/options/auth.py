@@ -22,8 +22,13 @@ def auth():
 
         if logging_in['auth'] == "register":
             user = User().create_user(ask_username, ask_password)
+            if not user:
+                print("User already exists.")
         elif logging_in['auth'] == "login":
             user = User().login_user(ask_username, ask_password)
+            if not user:
+                print("Incorrect credentials")
 
-    set_current_data("user", user)
+        set_current_data("user", user)
+        user = get_current_data("user")
             
