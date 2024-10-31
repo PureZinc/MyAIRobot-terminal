@@ -36,7 +36,7 @@ def bot_settings():
     while True:
         choice = choice_interface(
             "Settings", {
-                "Delete": coming_soon
+                "Delete Robot": coming_soon
             }
         )
         if choice == "exited":

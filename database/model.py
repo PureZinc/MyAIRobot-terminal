@@ -51,7 +51,7 @@ class Model:
             return True
         return False
 
-    def query(self, by_keys=False, **data):
+    def query(self, **data):
         results = []
         for obj in self.objects:
             if all(obj[data_key] == data_value for data_key, data_value in data.items()):

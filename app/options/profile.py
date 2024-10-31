@@ -1,7 +1,7 @@
 from database.current import get_current_data, set_current_data
 from app.utils import choice_interface, coming_soon
 from .bots import bots
-from pprint import pprint
+from .cyberspace import observe_cyberspace
 
 
 def log_out(are_you_sure):
@@ -43,7 +43,7 @@ def profile():
         f"Welcome Back, {user['username']}!", {
             "Profile": my_profile,
             "My Bots": bots,
-            "Cyberspace": coming_soon,
+            "Observe Cyberspace": observe_cyberspace,
             "Settings": settings
         }
     )
