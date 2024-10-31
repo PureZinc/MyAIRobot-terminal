@@ -38,5 +38,13 @@
             ],
             "xp": 0
         }
+    },
+    "articles":{
+        "69": {
+            "author_id": "42",
+            "title": "Let's test this out!",
+            "content": "This is me testing for the articles page! Hope this works out well!",
+            "written_date": "lol"
+        }
     }
 }

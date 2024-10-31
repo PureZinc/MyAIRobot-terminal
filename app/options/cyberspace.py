@@ -1,6 +1,7 @@
 import time
 from app.utils import choice_interface, coming_soon
 from database.objects import User, Robot
+from .library import observe_library
 from database.current import set_current_data, get_current_data
 from pprint import pprint
 
@@ -25,7 +26,7 @@ def observe_cyberspace():
         f"You are currently observing Cyberspace, {user['username']}!", {
             "Robots": all_robots,
             "Leaderboard": coming_soon,
-            "Library": coming_soon,
+            "Library": observe_library,
         }
     )
     if choice == "exited":

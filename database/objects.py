@@ -1,5 +1,6 @@
 from hashlib import sha256
 from .model import Model
+import time
 
 
 hasher = lambda pw: sha256(pw.encode()).hexdigest()
@@ -42,5 +43,19 @@ class Robot(Model):
             "behavior": behavior, 
             "memory": memory,
             "xp": xp
+        }
+        return self.create(obj)
+
+
+class Article(Model):
+    def __init__(self):
+        super().__init__("articles")
+    
+    def create_article(self, author_id, title, content):
+        obj = {
+            "author_id": author_id,
+            "title": title,
+            "content": content,
+            "written_date": time.localtime()
         }
         return self.create(obj)

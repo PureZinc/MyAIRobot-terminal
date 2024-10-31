@@ -4,7 +4,7 @@ from config.config import datafile
 
 
 class Model:
-    def __init__(self, name: str):
+    def __init__(self, name: str, **kwargs):
         self.name = name
         self.data = self._load_data()
         self.objects = self._get_list_data()
