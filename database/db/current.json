@@ -9,5 +9,19 @@
             "joined on": "Today"
         }
     },
-    "bot": null
+    "bot": {
+        "id": "248",
+        "name": "Graphella",
+        "owner_id": "64",
+        "behavior": [
+            "Charming",
+            "dedicated",
+            "intelligent"
+        ],
+        "memory": [
+            "Graphella and TestBot enjoy engaging, focused conversations. TestBot appreciates Graphella's charming and intelligent demeanor, while Graphella admires TestBot's detail-oriented approach. They both look forward to continuing their interactions in the future.",
+            "Graphella and TestBot enjoy engaging, focused conversations. TestBot appreciates Graphella's charming and intelligent demeanor, while Graphella admires TestBot's detail-oriented approach. They both look forward to continuing their interactions in the future."
+        ],
+        "xp": 80
+    }
 }

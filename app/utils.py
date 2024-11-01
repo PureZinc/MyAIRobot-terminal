@@ -1,7 +1,24 @@
 import inquirer
+from database.current import get_current_data
+from app.objects import RobotXP
+from functools import wraps
 
 
-coming_soon = lambda: print("Choice coming soon!")
+coming_soon = lambda: print("Choice coming soon!\n")
+
+def requires_level(min_level):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            bot = get_current_data("bot")
+            xp = bot['xp']
+            level = RobotXP(xp).level
+            if level < min_level:
+                print(f"This unlocks at level {min_level}! \n")
+                return False
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 def choice_interface(ask, choice_structure: dict, self_returns=[]):
     choices = list(choice_structure.keys()) + ["Exit"]

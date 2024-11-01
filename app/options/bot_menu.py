@@ -5,8 +5,23 @@ from ..objects import RobotXP
 from database.objects import Robot
 import time
 import random
-from pprint import pprint
+from functools import wraps
+from .library import explore_library
 
+
+def requires_level(min_level):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            bot = get_current_data("bot")
+            xp = bot['xp']
+            level = RobotXP(xp).level
+            if level < min_level:
+                print(f"This unlocks at level {min_level}! \n")
+                return False
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 def ask_bot():
     current = unload_current_data()
@@ -42,28 +57,18 @@ def bot_settings():
         f"Behavior: {bot['behavior']}", "\n", 
         RobotXP(bot['xp']), "\n"
     )
-
-    while True:
-        choice = choice_interface(
-            "Settings", {
-                "Delete Robot": coming_soon
-            }
-        )
-        if choice == "exited":
-            break
+    choice_interface(
+        "Settings", {
+            "Delete Robot": coming_soon
+        }
+    )
 
 
+@requires_level(3)
 def train_bot():
-    bot = get_current_data("bot")
-    xp = bot['xp']
-    level = RobotXP(xp).level
-    if level < 3:
-        print("This unlocks at level 3! \n")
-        return False
-    
     choice_interface(
         "Welcome to training!", {
-            "choices": coming_soon
+            "Choices": coming_soon
         }
     )
 
@@ -93,15 +98,13 @@ def chat_between_robots():
     Robot.addRobotXP(robot2["id"], 50)
 
 def playground():
-    while True:
-        choice = choice_interface(
-            "The Playground!", {
-                "Chat With Other Bots": chat_between_robots,
-                "Play Games": coming_soon
-            }
-        )
-        if choice == "exited":
-            break
+    choice_interface(
+        "The Playground!", {
+            "Chat With Other Bots": chat_between_robots,
+            "Play Games": coming_soon
+        }
+    )
+
 
 def adventure_into_cyberspace():
     print("\n Entering Cyberspace \n")
@@ -110,7 +113,7 @@ def adventure_into_cyberspace():
         "Welcome to Cyberspace! Where would you like to explore?", {
             "Playground": playground,
             "Gym": coming_soon,
-            "Library": coming_soon,
+            "Library": explore_library,
         }
     )
     if choice == "exited":

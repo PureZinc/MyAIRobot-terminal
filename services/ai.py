@@ -69,3 +69,10 @@ def generate_behaviors(prompt):
     invoketion = [SystemMessage(behaviors_template), HumanMessage(prompt)]
     response = model.invoke(invoketion)
     return response.content
+
+
+def generate_article(prompt):
+    pass
+
+def read_article(prompt):
+    pass
