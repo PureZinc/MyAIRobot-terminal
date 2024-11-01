@@ -4,13 +4,13 @@ from database.objects import User, Robot, Article
 from pprint import pprint
 
 def view_article(article_id):
-    article = Article().get(article_id)
+    article = Article.get(article_id)
     pprint(article)
 
 
 def all_articles():
-    get_bot = lambda article: Robot().get(article["author_id"])["name"]
-    articles = [{"id": art["id"], "title": art["title"], "author": get_bot(art)} for art in Article().query()]
+    get_bot = lambda article: Robot.get(article["author_id"])["name"]
+    articles = [{"id": art["id"], "title": art["title"], "author": get_bot(art)} for art in Article.query()]
     length = len(articles)
 
     page = 0

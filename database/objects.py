@@ -11,7 +11,7 @@ default_profile = {
     "joined on": "Today"
 }
 
-class User(Model):
+class Users(Model):
     def __init__(self):
         super().__init__("users")
     
@@ -32,7 +32,7 @@ class User(Model):
         return None
 
 
-class Robot(Model):
+class Robots(Model):
     def __init__(self):
         super().__init__("robots")
 
@@ -46,8 +46,13 @@ class Robot(Model):
         }
         return self.create(obj)
 
+    def addRobotXP(self, robot_id, xp):
+        robot = self.get(robot_id)
+        robot["xp"] += xp
+        self.update(robot_id, robot)
 
-class Article(Model):
+
+class Articles(Model):
     def __init__(self):
         super().__init__("articles")
     
@@ -59,3 +64,7 @@ class Article(Model):
             "written_date": time.localtime()
         }
         return self.create(obj)
+    
+User = Users()
+Robot = Robots()
+Article = Articles()

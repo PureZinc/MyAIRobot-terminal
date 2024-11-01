@@ -1,4 +1,13 @@
 {
-    "user": null,
+    "user": {
+        "id": "64",
+        "username": "nicholas",
+        "password": "e2284dc3b5535645288cde2bad818404be728fb8c9f70b055c0b52023b0ff0a0",
+        "profile": {
+            "membership": "Free",
+            "cybercoins": 100,
+            "joined on": "Today"
+        }
+    },
     "bot": null
 }

@@ -21,6 +21,9 @@ def ask_bot():
 
         answer = ask_chat(bot, prompt)
         print("\n \n", answer)
+
+
+
         ask_me_anything = "Ask me something else"
 
 
@@ -59,7 +62,7 @@ def train_bot():
 
 def chat_between_robots():
     current_robot = get_current_data("bot")
-    robots = Robot().query()
+    robots = Robot.query()
     all_robots = [bot for bot in robots if bot != current_robot]
     robot2 = random.choice(all_robots)
 
@@ -68,9 +71,9 @@ def chat_between_robots():
     print(f"{current_robot['name']} is currently speaking to {robot2['name']}")
     conversation, summary = robot_convo(current_robot, robot2, rounds=random.randrange(4, 8))
     for convo in conversation:
-        print(convo)
-        time.sleep(1)
-    print(f"\n Summary: {summary}")
+        print(convo, "\n\n")
+        time.sleep(2)
+    print(f"\nSummary: {summary}\n")
 
     # if f"Spoke to {robot2['name']}" not in current_robot['memory']:
     #     current_robot['memory'].append(f"Spoke to {robot2['name']}")

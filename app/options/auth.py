@@ -21,11 +21,11 @@ def auth():
         ask_password = input("Type password: ")
 
         if logging_in['auth'] == "Register":
-            user = User().create_user(ask_username, ask_password)
+            user = User.create_user(ask_username, ask_password)
             if not user:
                 print("User already exists.")
         elif logging_in['auth'] == "Login":
-            user = User().login_user(ask_username, ask_password)
+            user = User.login_user(ask_username, ask_password)
             if not user:
                 print("Incorrect credentials")
 

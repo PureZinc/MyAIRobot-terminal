@@ -7,7 +7,7 @@ from pprint import pprint
 
 
 def all_robots():
-    robots = [bot["name"] for bot in Robot().query()]
+    robots = [bot["name"] for bot in Robot.query()]
     total_bots = len(robots)
 
     pprint(f"{robots}")

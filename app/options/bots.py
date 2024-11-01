@@ -20,13 +20,13 @@ def create_bot():
         behaviors = generate_behaviors(description)
     
     current = unload_current_data()
-    Robot().create_robot(name, current["user"], behavior=behaviors.split(', '))
-    current["robot"] = Robot().query(name=name, user_id=current["user"]["id"])[0].id
+    Robot.create_robot(name, current["user"], behavior=behaviors.split(', '))
+    current["robot"] = Robot.query(name=name, user_id=current["user"]["id"])[0].id
     save_current_data(current)
 
 def choose_bot():
     current = unload_current_data()
-    robots = Robot().query(owner_id=current["user"]["id"])
+    robots = Robot.query(owner_id=current["user"]["id"])
     if not robots:
         print("You haven't created any robots yet!")
     else:
@@ -39,7 +39,7 @@ def choose_bot():
             ),
         ]
         chosen_robot = inquirer.prompt(choice_bot)['option']
-        get_robot = Robot().query(owner_id=current["user"]["id"], name=chosen_robot)[0]
+        get_robot = Robot.query(owner_id=current["user"]["id"], name=chosen_robot)[0]
         current["bot"] = get_robot
         save_current_data(current)
         bot_menu()
