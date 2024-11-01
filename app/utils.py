@@ -21,3 +21,38 @@ def choice_interface(ask, choice_structure: dict, self_returns=[]):
         if chosen in self_returns:
             return chosen
     return "exited"
+
+
+def search_interface(ask, search_query: list, retrieve_func, choice_filter= lambda x:x, query_num=5):
+    length = len(search_query)
+    page_number = 0
+    total_pages = length//query_num
+    print_page_number = lambda: print(f"Page {page_number}")
+    
+    next_page = "Next Page -->"
+    prev_page = "<-- Previous Page"
+    set_pages = {
+        next_page: print_page_number,
+        prev_page: print_page_number
+    }
+
+    def set_choice_interface(page_num):
+        page = search_query[page_num*query_num: min(length, (page_num+1)*query_num)]
+        choices = dict(zip([choice_filter(p) for p in page], [lambda: retrieve_func(obj["id"]) for obj in page]))
+
+        if total_pages > page_num:
+            set_pages[next_page] = print_page_number
+        else: del set_pages[next_page]
+        if page_num > 0:
+            set_pages[prev_page] = print_page_number
+        else: del set_pages[prev_page]
+        
+        return choice_interface(f"{ask} (Page:{page_num+1}/{total_pages+1})", {**choices, **set_pages}, self_returns=list(set_pages.keys()))
+
+    choice = set_choice_interface(page_number)
+    while choice != "exited":
+        if choice == next_page:
+            page_number += 1
+        elif choice == prev_page:
+            page_number -= 1
+        choice = set_choice_interface(page_number)

@@ -44,7 +44,7 @@ def profile():
             "Profile": my_profile,
             "My Bots": bots,
             "Observe Cyberspace": observe_cyberspace,
-            "Settings": settings
+            "Settings": settings,
         }
     )
     log_out("Would you also like to log out?")

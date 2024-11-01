@@ -20,8 +20,8 @@ def create_bot():
         behaviors = generate_behaviors(description)
     
     current = unload_current_data()
-    Robot.create_robot(name, current["user"], behavior=behaviors.split(', '))
-    current["robot"] = Robot.query(name=name, user_id=current["user"]["id"])[0].id
+    new_bot = Robot.create_robot(name, current["user"], behavior=behaviors.split(', '))
+    current["robot"] = new_bot
     save_current_data(current)
 
 def choose_bot():
