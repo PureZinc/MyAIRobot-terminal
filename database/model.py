@@ -38,14 +38,14 @@ class Model:
         return self.data.get(obj_id, None)
 
     def update(self, obj_id, new_data):
-        if obj_id in self.objects:
+        if obj_id in self.data.keys():
             self.data[obj_id].update(new_data)
             self._save_data()
             return True
         return False
 
     def delete(self, obj_id):
-        if obj_id in self.objects:
+        if obj_id in self.data.keys():
             del self.data[obj_id]
             self._save_data()
             return True

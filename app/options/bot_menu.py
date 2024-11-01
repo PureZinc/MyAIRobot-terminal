@@ -5,6 +5,7 @@ from ..objects import RobotXP
 from database.objects import Robot
 import time
 import random
+from pprint import pprint
 
 
 def ask_bot():
@@ -19,11 +20,17 @@ def ask_bot():
         if prompt == "0":
             break
 
-        answer = ask_chat(bot, prompt)
+        answer, memory = ask_chat(bot, prompt)
         print("\n \n", answer)
+        
+        xp_gain = 10
+        if memory:
+            bot["memory"].append(memory)
+            print("\nNew Memory Made! +5XP")
+            Robot.update(bot["id"], {"memory": memory})
+            xp_gain += 5
 
-
-
+        Robot.addRobotXP(bot["id"], xp_gain)
         ask_me_anything = "Ask me something else"
 
 
@@ -69,21 +76,21 @@ def chat_between_robots():
     print("Finding bot to talk to...")
     time.sleep(2)
     print(f"{current_robot['name']} is currently speaking to {robot2['name']}")
-    conversation, summary = robot_convo(current_robot, robot2, rounds=random.randrange(4, 8))
-    for convo in conversation:
-        print(convo, "\n\n")
-        time.sleep(2)
+
+    conversation, summary, memory = robot_convo(current_robot, robot2, rounds=random.randrange(4, 8))
+
+    print(conversation, "\n\n")
     print(f"\nSummary: {summary}\n")
 
-    # if f"Spoke to {robot2['name']}" not in current_robot['memory']:
-    #     current_robot['memory'].append(f"Spoke to {robot2['name']}")
-    # if f"Spoke to {current_robot['name']}" not in robot2['memory']:
-    #     robot2['memory'].append(f"Spoke to {current_robot['name']}")
+    current_robot['memory'].append(memory[current_robot['name']])
+    robot2['memory'].append(memory[robot2['name']])
 
-    # Robot().update(current_id, current_robot)
-    # set_current_data("bot", current_robot)
-    # Robot().update(robot2_id, robot2)
+    Robot.update(current_robot["id"], current_robot)
+    set_current_data("bot", current_robot)
+    Robot.update(robot2["id"], robot2)
 
+    Robot.addRobotXP(current_robot["id"], 30)
+    Robot.addRobotXP(robot2["id"], 50)
 
 def playground():
     while True:

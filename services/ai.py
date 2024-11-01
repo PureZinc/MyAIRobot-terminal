@@ -1,20 +1,25 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from config.config import OPENAI_API_KEY
+import random
 
 
 model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7, api_key=OPENAI_API_KEY)
 
-def quick_ask(prompt):
-    invoketion = [SystemMessage(prompt)]
+def quick_ask(prompt, extra_conditions=[]):
+    invoketion = [SystemMessage(prompt), *[SystemMessage(extra) for extra in extra_conditions]]
     response = model.invoke(invoketion)
     return response.content
+
+def get_memory(bot, convo, extra=[]):
+    down_to_255 = "Boil it down to under 255 characters"
+    return quick_ask(f"Get memory from {bot} according to this conversation: {convo}", extra_conditions=[down_to_255, *extra])
 
 def ask_chat(bot, prompt):
     template = f"""
     Imitate how {bot} would respond to "{prompt}".
 
-    1.) Must talk about possible interests based on the behavior
+    1.) Must talk about things related to the behavior.
 
     2.) Imitate as a pet, friend, or human being.
 
@@ -22,23 +27,36 @@ def ask_chat(bot, prompt):
     """
     invoketion = [SystemMessage(template)]
     response = model.invoke(invoketion)
-    return response.content
+    content = response.content
+
+    new_memory = None
+    if random.randint(1, 10) <= 3:
+        new_memory = get_memory(bot, content)
+
+    return content, new_memory
 
 
 def robot_convo(robot1, robot2, rounds=5):
-    rob1_response = ""
-    rob2_response = f"Hi! I'm {robot2['name']}!"
-    convo = []
-    for round in range(rounds):
-        if round%2==0:
-            rob1_response = ask_chat(robot1, rob2_response)
-            convo.append(f"{robot1['name']}: {rob1_response}")
-        else:
-            rob2_response = ask_chat(robot2, rob1_response)
-            convo.append(f"{robot2['name']}: {rob2_response}")
-    summary = quick_ask(f"Summarize this conversation between {robot1['name']} and {robot2['name']}: ")
+    template = f"""
+    Imitate a conversation between {robot1} and {robot2} lasting {rounds} rounds.
 
-    return convo, summary
+    1.) Must talk about things related to the behaviors.
+
+    2.) Imitate as a pet, friend, or human being.
+
+    3.) Only know what's in it's memory. Nothing outside of it should be mentioned.
+    """
+    invoketion = [SystemMessage(template)]
+    response = model.invoke(invoketion)
+    convo = response.content
+    summary = quick_ask(f"Summarize this conversation between {robot1['name']} and {robot2['name']}: {convo}")
+
+    memory = {
+        robot1['name']: get_memory(robot1, convo),
+        robot2['name']: get_memory(robot2, convo)
+    }
+
+    return convo, summary, memory
 
 
 behaviors_template = """

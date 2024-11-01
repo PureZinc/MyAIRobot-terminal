@@ -1,6 +1,7 @@
 from hashlib import sha256
 from .model import Model
 import time
+from app.objects import RobotXP
 
 
 hasher = lambda pw: sha256(pw.encode()).hexdigest()
@@ -48,8 +49,13 @@ class Robots(Model):
 
     def addRobotXP(self, robot_id, xp):
         robot = self.get(robot_id)
+        old_xp = RobotXP(robot["xp"])
         robot["xp"] += xp
+        new_xp = RobotXP(robot["xp"])
         self.update(robot_id, robot)
+        print(f"\n+{xp} XP")
+        if new_xp.level > old_xp.level:
+            print(f"{robot['name']} leveled up to level {new_xp.level}!!")
 
 
 class Articles(Model):

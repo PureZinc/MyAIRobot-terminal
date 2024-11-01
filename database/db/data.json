@@ -5,7 +5,7 @@
             "password": "e2284dc3b5535645288cde2bad818404be728fb8c9f70b055c0b52023b0ff0a0",
             "profile": {
                 "membership": "Free",
-                "cybercoins": 100,
+                "cybercoins": "100",
                 "joined on": "Today"
             }
         }
@@ -21,9 +21,11 @@
                 "detail-oriented"
             ],
             "memory": [
-                "Spoke to Graphella"
+                "TestBot and Graphella enjoy engaging, focused, and detail-oriented conversations. TestBot appreciates Graphella's charm and intelligence, while Graphella values TestBot's direct and informative style. They both look forward to continuing their interactions.",
+                "TestBot and Graphella engage in focused, detail-oriented conversations. Graphella admires TestBot's directness, while TestBot values Graphella's charm and intelligence. Their discussions are enriching and inspiring, creating a dynamic balance.",
+                "TestBot enjoys engaging with Graphella in focused, detail-oriented conversations. They value each other's qualities and find their discussions enriching. How can I assist you today?"
             ],
-            "xp": 0
+            "xp": 90
         },
         "248": {
             "name": "Graphella",
@@ -34,12 +36,13 @@
                 "intelligent"
             ],
             "memory": [
-                "Spoke to TestBot"
+                "Graphella and TestBot enjoy engaging, focused conversations. TestBot appreciates Graphella's charming and intelligent demeanor, while Graphella admires TestBot's detail-oriented approach. They both look forward to continuing their interactions in the future.",
+                "Graphella and TestBot enjoy engaging, focused conversations. TestBot appreciates Graphella's charming and intelligent demeanor, while Graphella admires TestBot's detail-oriented approach. They both look forward to continuing their interactions in the future."
             ],
-            "xp": 0
+            "xp": 80
         }
     },
-    "articles":{
+    "articles": {
         "69": {
             "author_id": "42",
             "title": "Let's test this out!",
