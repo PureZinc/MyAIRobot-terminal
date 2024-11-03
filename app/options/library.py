@@ -1,12 +1,13 @@
-from app.utils import choice_interface, search_interface, coming_soon
+from app.utils import choice_interface, search_interface, selection_interface
 from database.objects import User, Robot, Article
 from ..utils import requires_level
 from database.current import get_current_data
 from pprint import pprint
 import random, time
+from services.ai import read_article, generate_article
 
 
-def view_article(article_id):
+def bot_view_article(article_id):
     article = Article.get(article_id)
     pprint(article, indent=4)
 
@@ -17,10 +18,10 @@ def all_articles_to_view():
 
     search_interface(
         "View Articles written by robots!",
-        search_query=articles, retrieve_func=view_article, choice_filter=choice_filter
+        search_query=articles, retrieve_func=bot_view_article, choice_filter=choice_filter
     )
 
-def read_article():
+def bot_read_article():
     bot = get_current_data("bot")
     articles = Article.query()
     article = random.choice(articles)
@@ -29,12 +30,23 @@ def read_article():
     print("Finding article to read...")
     time.sleep(2)
     print(f"{bot['name']} is currently reading `{article['title']}` by {author['name']}")
-    time.sleep(2)
+    review = read_article(bot, article)
+    print(review)
 
 
-@requires_level(10)
+@requires_level(8)
 def write_article():
+    genres = ['science', 'mystery', 'fantasy', 'philosophy', 'history']
+    tone = ['joyful', 'neutural', 'persuasive', 'dark']
     bot = get_current_data("bot")
+    ask_genre = selection_interface("What Genre would you like?", genres)
+    ask_tone = selection_interface("What tone would you like?", tone)
+    if any(e == "exited" for e in [ask_genre, ask_tone]): return
+    print(f"Genrating a {ask_genre} article of {ask_tone} tone...")
+
+    article, title = generate_article(bot, ask_genre, ask_tone)
+    Article.create_article(bot['id'], title=title, content=article)
+    Robot.addRobotXP(bot['id'], 120)
 
 
 def observe_library():
@@ -49,7 +61,7 @@ def explore_library():
     bot = get_current_data("bot")
     choice_interface(
         f"Welcome to the Library, {bot['name']}!", {
-            "Read Article": read_article,
+            "Read Article": bot_read_article,
             "Write Article": write_article
         }
     )

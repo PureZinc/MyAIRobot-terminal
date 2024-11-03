@@ -43,6 +43,7 @@ class Robots(Model):
             "owner_id": owner_id, 
             "behavior": behavior, 
             "memory": memory,
+            "friends": {},
             "xp": xp
         }
         return self.create(obj)

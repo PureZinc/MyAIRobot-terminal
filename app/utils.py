@@ -40,6 +40,11 @@ def choice_interface(ask, choice_structure: dict, self_returns=[]):
     return "exited"
 
 
+def selection_interface(ask, selection=[]):
+    selections = dict(zip(selection, [lambda: None for _ in selection]))
+    return choice_interface(ask, selections, self_returns=selection)
+
+
 def search_interface(ask, search_query: list, retrieve_func, choice_filter= lambda x:x, query_num=5):
     length = len(search_query)
     page_number = 0

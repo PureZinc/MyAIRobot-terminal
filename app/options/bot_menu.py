@@ -42,10 +42,12 @@ def ask_bot():
         if memory:
             bot["memory"].append(memory)
             print("\nNew Memory Made! +5XP")
-            Robot.update(bot["id"], {"memory": memory})
+            Robot.update(bot["id"], bot)
             xp_gain += 5
 
         Robot.addRobotXP(bot["id"], xp_gain)
+        new_bot = Robot.get(bot["id"])
+        set_current_data("bot", new_bot)
         ask_me_anything = "Ask me something else"
 
 
@@ -68,7 +70,8 @@ def bot_settings():
 def train_bot():
     choice_interface(
         "Welcome to training!", {
-            "Choices": coming_soon
+            "Edit Memory": coming_soon,
+            "Edit Behavior": coming_soon
         }
     )
 
@@ -86,6 +89,9 @@ def chat_between_robots():
 
     print(conversation, "\n\n")
     print(f"\nSummary: {summary}\n")
+
+    current_robot['friends'][robot2['name']] = current_robot['friends'].get(robot2['name'], 0) + 1
+    robot2['friends'][current_robot['name']] = robot2['friends'].get(current_robot['name'], 0) + 1
 
     current_robot['memory'].append(memory[current_robot['name']])
     robot2['memory'].append(memory[robot2['name']])

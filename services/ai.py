@@ -29,7 +29,7 @@ def ask_chat(bot, prompt):
     response = model.invoke(invoketion)
     content = response.content
 
-    new_memory = None
+    new_memory = False
     if random.randint(1, 10) <= 3:
         new_memory = get_memory(bot, content)
 
@@ -71,8 +71,17 @@ def generate_behaviors(prompt):
     return response.content
 
 
-def generate_article(prompt):
-    pass
+def generate_article(bot, genre, tone, word_count=800):
+    template = f"""
+    Generate an {genre} article written by author: {bot} with a {tone} tone. The word count should be
+    less than {word_count} words.
+    """
+    article = quick_ask(template)
+    title = quick_ask(f"Generate a title under 50 characters for this article: {article}")
+    return article, title
 
-def read_article(prompt):
-    pass
+
+def read_article(bot, article):
+    temp = f"Generate a review of this story: {article}; as bot with params{bot}."
+    review = quick_ask(temp)
+    return review

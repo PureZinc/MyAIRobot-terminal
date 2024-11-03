@@ -20,7 +20,7 @@ def create_bot():
         behaviors = generate_behaviors(description)
     
     current = unload_current_data()
-    new_bot = Robot.create_robot(name, current["user"], behavior=behaviors.split(', '))
+    new_bot = Robot.create_robot(name, current["user"]["id"], behavior=behaviors.split(', '))
     current["robot"] = new_bot
     save_current_data(current)
 
