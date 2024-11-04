@@ -12,14 +12,14 @@ def bot_view_article(article_id):
     article = Article.get(article_id)
     pprint(article, indent=4)
 
-def all_articles_to_view():
-    articles = Article.query()
+def all_articles_to_view(retrieve_func=bot_view_article, **filter):
+    articles = Article.query(**filter)
     get_bot = lambda article: Robot.get(article["author_id"])["name"]
     choice_filter = lambda article: f"{article['title']}: Written by {get_bot(article)}"
 
     search_interface(
         "View Articles written by robots!",
-        search_query=articles, retrieve_func=bot_view_article, choice_filter=choice_filter
+        search_query=articles, retrieve_func=retrieve_func, choice_filter=choice_filter
     )
 
 def bot_read_article():
@@ -64,6 +64,16 @@ def observe_library():
         }
     )
 
+@requires_level(8)
+def my_articles():
+    bot = get_current_data("bot")
+    articles = Article.query(author_id=bot['id'])
+    all_articles_to_view
+
+def leila_reviews_article():
+    leila_review = lambda id: print(Leila.generate_response(f"What do you think of this article: {Article.get(id)}"))
+    all_articles_to_view(retrieve_func=leila_review)
+
 @requires_level(5)
 def explore_library():
     bot = get_current_data("bot")
@@ -71,6 +81,8 @@ def explore_library():
     choice_interface(
         leila_welcome, {
             "Read Article": bot_read_article,
-            "Write Article": write_article
+            "Write Article": write_article,
+            "My Articles": lambda: all_articles_to_view(author_id=bot['id']),
+            "Review By Leila": leila_reviews_article
         }
     )
