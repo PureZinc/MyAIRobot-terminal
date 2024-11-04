@@ -1,4 +1,4 @@
-from services.ai import ask_chat, robot_convo
+from services.ai import ask_chat, robot_convo, boil_down_memory
 from app.utils import choice_interface, coming_soon
 from database.current import set_current_data, unload_current_data, get_current_data
 from ..objects import RobotXP
@@ -7,6 +7,16 @@ import time
 import random
 from functools import wraps
 from .library import explore_library
+
+
+def bot_stats(bot_id):
+    bot = Robot.get(bot_id)
+    print(
+        "\n\n", 
+        f"Bot Name: {bot['name']}", "\n", 
+        f"Behavior: {bot['behavior']}", "\n", 
+        RobotXP(bot['xp']), "\n"
+    )
 
 
 def requires_level(min_level):
@@ -53,12 +63,7 @@ def ask_bot():
 
 def bot_settings():
     bot = get_current_data("bot")
-    print(
-        "\n\n", 
-        f"Bot Name: {bot['name']}", "\n", 
-        f"Behavior: {bot['behavior']}", "\n", 
-        RobotXP(bot['xp']), "\n"
-    )
+    bot_stats(bot['id'])
     choice_interface(
         "Settings", {
             "Delete Robot": coming_soon
@@ -66,12 +71,34 @@ def bot_settings():
     )
 
 
+def train_memory():
+    bot = get_current_data("bot")
+    memory = bot['memory']
+
+    def boil_mem():
+        new_memory = boil_down_memory(bot)
+        bot['memory'] = [new_memory]
+        Robot.update(bot['id'], bot)
+        set_current_data("bot", bot)
+        print("Memory boiled down!")
+
+    def view_mem():
+        for memory in bot['memory']:
+            print(memory)
+
+    choice_interface(
+        f"Robot has {len(memory)} items in it's memory!", {
+            "Boil Down Memory": boil_mem,
+            "View Memory": view_mem
+        }
+    )
+
 @requires_level(3)
 def train_bot():
     choice_interface(
         "Welcome to training!", {
-            "Edit Memory": coming_soon,
-            "Edit Behavior": coming_soon
+            "Train Memory": train_memory,
+            "Train Behavior": coming_soon
         }
     )
 

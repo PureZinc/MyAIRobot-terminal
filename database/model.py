@@ -27,6 +27,7 @@ class Model:
 
         with open(datafile, "w") as f:
             json.dump(data, f, indent=4)
+        self.data = self._load_data()
 
     def create(self, obj):
         obj_id = random.randint(1, 256*256)

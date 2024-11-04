@@ -5,6 +5,7 @@ from database.current import get_current_data
 from pprint import pprint
 import random, time
 from services.ai import read_article, generate_article
+from ..ai_characters import Leila
 
 
 def bot_view_article(article_id):
@@ -48,19 +49,27 @@ def write_article():
     Article.create_article(bot['id'], title=title, content=article)
     Robot.addRobotXP(bot['id'], 120)
 
+def talk_to_leila():
+    ask = input("(Press 0 to exit) Ask Leila Anything: ")
+    while ask != "0":
+        leila_welcome = Leila.generate_response(ask)
+        print(leila_welcome)
+        ask = input("(Press 0 to exit) Ask Leila Something Else!: ")
 
 def observe_library():
     choice_interface(
         f"Welcome to the Library!", {
             "View All Articles": all_articles_to_view,
+            "Talk to Leila": talk_to_leila
         }
     )
 
 @requires_level(5)
 def explore_library():
     bot = get_current_data("bot")
+    leila_welcome = Leila.generate_response(f"Hi! I'm {bot['name']}!")
     choice_interface(
-        f"Welcome to the Library, {bot['name']}!", {
+        leila_welcome, {
             "Read Article": bot_read_article,
             "Write Article": write_article
         }

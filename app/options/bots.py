@@ -1,6 +1,6 @@
 import inquirer
 from database.objects import Robot
-from database.current import unload_current_data, save_current_data
+from database.current import unload_current_data, save_current_data, set_current_data
 from services.ai import generate_behaviors
 from ..utils import choice_interface
 from .bot_menu import bot_menu
@@ -18,11 +18,14 @@ def create_bot():
             description = input("(Press 0 to exit) Write a 100 word description of your robot: ")
             if description == "0": return False
         behaviors = generate_behaviors(description)
+        if behaviors == "inapropriate":
+            print("Prompt is inapropriate!")
     
     current = unload_current_data()
-    new_bot = Robot.create_robot(name, current["user"]["id"], behavior=behaviors.split(', '))
-    current["robot"] = new_bot
+    new_bot = Robot.create_robot(name, current["user"]["id"], behavior=behaviors)
+    current["bot"] = Robot.get(new_bot)
     save_current_data(current)
+
 
 def choose_bot():
     current = unload_current_data()

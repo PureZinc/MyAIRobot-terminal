@@ -11,21 +11,26 @@ def quick_ask(prompt, extra_conditions=[]):
     response = model.invoke(invoketion)
     return response.content
 
+def human_ask(prompt, extra_conditions=[]):
+    invoketion = [*[SystemMessage(extra) for extra in extra_conditions], HumanMessage(prompt)]
+    response = model.invoke(invoketion)
+    return response.content
+
 def get_memory(bot, convo, extra=[]):
     down_to_255 = "Boil it down to under 255 characters"
-    return quick_ask(f"Get memory from {bot} according to this conversation: {convo}", extra_conditions=[down_to_255, *extra])
+    return quick_ask(f"Generate memory from {bot} according to this conversation: {convo}", extra_conditions=[down_to_255, *extra])
 
 def ask_chat(bot, prompt):
     template = f"""
-    Imitate how {bot} would respond to "{prompt}".
+    You are imitating a personality with these params: {bot}.
 
     1.) Must talk about things related to the behavior.
 
     2.) Imitate as a pet, friend, or human being.
 
-    3.) Only know what's in it's memory. Nothing outside of it should be mentioned.
+    3.) Only use what's in it's memory to respond. Nothing outside of it should be mentioned.
     """
-    invoketion = [SystemMessage(template)]
+    invoketion = [SystemMessage(template), HumanMessage(prompt)]
     response = model.invoke(invoketion)
     content = response.content
 
@@ -60,8 +65,8 @@ def robot_convo(robot1, robot2, rounds=5):
 
 
 behaviors_template = """
-    Return a list separated by , of the personality of a robot according to the human response given.
-    The response should go into detail on the behavior of the robot.
+    Return a summary of the robot described in the prompt, including it's behaviors, speech, and
+    way of communicating. Boil it down to less than 256 characters.
 
     If that human response is NOT appropriate, just say "inapropriate".
     """
@@ -69,6 +74,9 @@ def generate_behaviors(prompt):
     invoketion = [SystemMessage(behaviors_template), HumanMessage(prompt)]
     response = model.invoke(invoketion)
     return response.content
+
+def boil_down_memory(bot):
+    return quick_ask(f"Boil all this memory down into one sentence: {bot['memory']}")
 
 
 def generate_article(bot, genre, tone, word_count=800):
