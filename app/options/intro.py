@@ -1,13 +1,12 @@
-from app.utils import choice_interface, coming_soon
-from pprint import pprint
+from app.utils import choice_interface
 
 
 def about():
     print("""
-            Welcome to My AI Robot: Play, Create, and Build Robots within the cyberverse!
+            Welcome to My AI Robot: Play, Create, and Build Robots within Cyberspace!
 
            Based on the many sci-fi movies based around AI and the metaverse, such as `iRobot`,
-           My AI Robot allows you to build and grow an AI robot within the `Cyberverse`, a world
+           My AI Robot allows you to build and grow an AI robot within `Cyberspace`, a world
            only accessible to robots. There, robots can communicate, play, and even write 
            articles!
 
