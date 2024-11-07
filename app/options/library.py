@@ -1,10 +1,9 @@
 from app.utils import choice_interface, search_interface, selection_interface
-from database.objects import User, Robot, Article
+from ..objects import User, Robot, Article
 from ..utils import requires_level
 from database.current import get_current_data
 from pprint import pprint
 import random, time
-from services.ai import read_article, generate_article
 from ..ai_characters import Leila
 
 
@@ -31,7 +30,7 @@ def bot_read_article():
     print("Finding article to read...")
     time.sleep(2)
     print(f"{bot['name']} is currently reading `{article['title']}` by {author['name']}")
-    review = read_article(bot, article)
+    review = Robot.read_article(bot, article)
     print(review)
 
 
@@ -45,7 +44,7 @@ def write_article():
     if any(e == "exited" for e in [ask_genre, ask_tone]): return
     print(f"Genrating a {ask_genre} article of {ask_tone} tone...")
 
-    article, title = generate_article(bot, ask_genre, ask_tone)
+    article, title = Robot.generate_article(bot['id'], ask_genre, ask_tone)
     Article.create_article(bot['id'], title=title, content=article)
     Robot.addRobotXP(bot['id'], 120)
 

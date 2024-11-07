@@ -1,5 +1,5 @@
 import inquirer
-from database.objects import User
+from ..objects import User
 from database.current import set_current_data, get_current_data
 
 

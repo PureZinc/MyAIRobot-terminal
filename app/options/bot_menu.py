@@ -1,8 +1,7 @@
 from services.ai import ask_chat, robot_convo, boil_down_memory
 from app.utils import choice_interface, coming_soon
 from database.current import set_current_data, unload_current_data, get_current_data
-from ..objects import RobotXP
-from database.objects import Robot
+from ..objects import Robot, RobotXP
 import time
 import random
 from functools import wraps
@@ -45,7 +44,7 @@ def ask_bot():
         if prompt == "0":
             break
 
-        answer, memory = ask_chat(bot, prompt)
+        answer, memory = Robot.generate_response(bot['id'], prompt)
         print("\n \n", answer)
         
         xp_gain = 10
@@ -76,7 +75,7 @@ def train_memory():
     memory = bot['memory']
 
     def boil_mem():
-        new_memory = boil_down_memory(bot)
+        new_memory = Robot.boil_down_memory(bot['id'])
         bot['memory'] = [new_memory]
         Robot.update(bot['id'], bot)
         set_current_data("bot", bot)
@@ -112,7 +111,7 @@ def chat_between_robots():
     time.sleep(2)
     print(f"{current_robot['name']} is currently speaking to {robot2['name']}")
 
-    conversation, summary, memory = robot_convo(current_robot, robot2, rounds=random.randrange(4, 8))
+    conversation, summary, memory = Robot.generate_conversation(current_robot['id'], robot2['id'], rounds=random.randrange(4, 8))
 
     print(conversation, "\n\n")
     print(f"\nSummary: {summary}\n")
@@ -129,6 +128,7 @@ def chat_between_robots():
 
     Robot.addRobotXP(current_robot["id"], 30)
     Robot.addRobotXP(robot2["id"], 50)
+
 
 def playground():
     choice_interface(

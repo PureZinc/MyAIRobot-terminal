@@ -1,5 +1,5 @@
 import inquirer
-from database.objects import Robot
+from ..objects import Robot
 from database.current import unload_current_data, save_current_data, set_current_data
 from services.ai import generate_behaviors
 from ..utils import choice_interface

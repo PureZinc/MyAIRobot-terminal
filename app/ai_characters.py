@@ -1,5 +1,5 @@
 from services.ai import human_ask
-from database.objects import Article
+from .objects import Article
 
 class RobotCharacter:
     def __init__(self, name: str, template: str):

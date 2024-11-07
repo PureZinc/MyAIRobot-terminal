@@ -1,6 +1,6 @@
 import time
 from app.utils import choice_interface, search_interface, coming_soon
-from database.objects import User, Robot, Article
+from ..objects import User, Robot, Article
 from .library import observe_library
 from ..objects import RobotXP
 from database.current import set_current_data, get_current_data
